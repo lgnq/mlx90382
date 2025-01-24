@@ -1,4 +1,4 @@
-# mpu6xxx
+# mlx90382
 
 [中文页](README_ZH.md) | English
 
@@ -11,7 +11,6 @@ This software package is a universal sensor driver package for InvenSense's six-
 | Contains equipment          | Accelerometer | Gyroscope | Magnetometer |
 | --------------------------- | ------------- | --------- | ------------ |
 | **Communication Interface** |               |           |              |
-| IIC                         | √             | √         | √            |
 | SPI                         | √             | √         | √            |
 | **Work Mode**               |               |           |              |
 | Polling                     | √             | √         | √            |
@@ -33,61 +32,61 @@ This software package is a universal sensor driver package for InvenSense's six-
 
 - RT-Thread 4.0.0+
 - Sensor component
-- IIC/SPI driver: mpu6xxx devices use IIC/SPI for data communication, and need system IIC/SPI driver support;
+- IIC/SPI driver: mlx90382 devices use IIC/SPI for data communication, and need system IIC/SPI driver support;
 
 ### Get the package
 
-To use the MPU6xxx software package, you need to select it in the RT-Thread package management. The specific path is as follows:
+To use the mlx90382 software package, you need to select it in the RT-Thread package management. The specific path is as follows:
 
 ```
 RT-Thread online packages  --->
   peripheral libraries and drivers  --->
     sensors drivers  --->
-      mpu6xxx: Universal 6-axis sensor driver package,support: accelerometer, gyroscope.
+      mlx90382: Universal 6-axis sensor driver package,support: accelerometer, gyroscope.
               Version (latest)  --->
-        [*]   Enable mpu6xxx acce
-        [*]   Enable mpu6xxx gyro
-        [*]   Enable mpu6xxx mag
+        [*]   Enable mlx90382 acce
+        [*]   Enable mlx90382 gyro
+        [*]   Enable mlx90382 mag
 ```
 
-**Enable MPU6xxx acce**: Configure to enable the accelerometer function
+**Enable mlx90382 acce**: Configure to enable the accelerometer function
 
-**Enable MPU6xxx gyro**: Configure to turn on the gyroscope function
+**Enable mlx90382 gyro**: Configure to turn on the gyroscope function
 
-**Enable MPU6xxx mag**: Configure to turn on the Magnetometer function
+**Enable mlx90382 mag**: Configure to turn on the Magnetometer function
 
 **Version**: software package version selection
 
 ### Using packages
 
-The initialization function of MPU6xxx software package is as follows:
+The initialization function of mlx90382 software package is as follows:
 
 ```
-int rt_hw_mpu6xxx_init(const char *name, struct rt_sensor_config *cfg);
+int rt_hw_mlx90382_init(const char *name, struct rt_sensor_config *cfg);
 ```
 
 This function needs to be called by the user. The main functions of the function are:
 
 - Device configuration and initialization (configure interface devices and interrupt pins according to the incoming configuration information);
-- Register the corresponding sensor device and complete the registration of the MPU6xxx device;
+- Register the corresponding sensor device and complete the registration of the mlx90382 device;
 
 #### Initialization example
 
 ```
-#include "sensor_inven_mpu6xxx.h"
+#include "sensor_melexis_mlx90382.h"
 
-int rt_hw_mpu6xxx_port(void)
+int rt_hw_mlx90382_port(void)
 {
     struct rt_sensor_config cfg;
     
     cfg.intf.dev_name = "i2c1";
-    cfg.intf.user_data = (void *)MPU6XXX_ADDR_DEFAULT;
+    cfg.intf.user_data = (void *)MLX90382_ADDR_DEFAULT;
     cfg.irq_pin.pin = RT_PIN_NONE;
 
-    rt_hw_mpu6xxx_init("mpu", &cfg);
+    rt_hw_mlx90382_init("mpu", &cfg);
     return 0;
 }
-INIT_APP_EXPORT(rt_hw_mpu6xxx_port);
+INIT_APP_EXPORT(rt_hw_mlx90382_port);
 ```
 
 ## Precautions
