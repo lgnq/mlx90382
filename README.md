@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This software package is a universal sensor driver package for InvenSense's six-axis series sensors, compatible with mpu6000, mpu6050, mpu6500, mpu9250, icm20608 and other sensors. And the new version of this software package has been connected to the Sensor framework, through the Sensor framework, developers can quickly drive this sensor. To view the README of the **old version of the package**, please click [here](README_OLD.md).
+This software package is a universal sensor driver package for Melexis's resolver sensors. And the new version of this software package has been connected to the Sensor framework, through the Sensor framework, developers can quickly drive this sensor.
 
 ## Support
 
@@ -32,7 +32,7 @@ This software package is a universal sensor driver package for InvenSense's six-
 
 - RT-Thread 4.0.0+
 - Sensor component
-- IIC/SPI driver: mlx90382 devices use IIC/SPI for data communication, and need system IIC/SPI driver support;
+- SPI driver: mlx90382 devices use SPI for data communication, and need system SPI driver support;
 
 ### Get the package
 
@@ -44,16 +44,7 @@ RT-Thread online packages  --->
     sensors drivers  --->
       mlx90382: Universal 6-axis sensor driver package,support: accelerometer, gyroscope.
               Version (latest)  --->
-        [*]   Enable mlx90382 acce
-        [*]   Enable mlx90382 gyro
-        [*]   Enable mlx90382 mag
 ```
-
-**Enable mlx90382 acce**: Configure to enable the accelerometer function
-
-**Enable mlx90382 gyro**: Configure to turn on the gyroscope function
-
-**Enable mlx90382 mag**: Configure to turn on the Magnetometer function
 
 **Version**: software package version selection
 
@@ -78,15 +69,14 @@ This function needs to be called by the user. The main functions of the function
 int rt_hw_mlx90382_port(void)
 {
     struct rt_sensor_config cfg;
-    
-    cfg.intf.dev_name = "i2c1";
-    cfg.intf.user_data = (void *)MLX90382_ADDR_DEFAULT;
-    cfg.irq_pin.pin = RT_PIN_NONE;
 
-    rt_hw_mlx90382_init("mpu", &cfg);
+    cfg.intf.dev_name  = "spi10";
+
+    rt_hw_mlx90382_init("mps", &cfg);
+
     return 0;
 }
-INIT_APP_EXPORT(rt_hw_mlx90382_port);
+INIT_ENV_EXPORT(rt_hw_mlx90382_port);
 ```
 
 ## Precautions
@@ -97,6 +87,6 @@ No
 
 Maintenance man:
 
-- [guozhanxin](https://github.com/Guozhanxin)
+- [Eamon Fang](https://github.com/lgnq) 
 
-- Homepage: <https://github.com/RT-Thread-packages/mpu-6xxx>
+- 主页：<https://github.com/lgnq/mlx90382>
