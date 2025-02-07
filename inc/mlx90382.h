@@ -28,14 +28,6 @@ union mlx90382_config_reg
     };
 };
 
-/* 3-axis data structure */
-struct mpu6xxx_3axes
-{
-    rt_int16_t x;
-    rt_int16_t y;
-    rt_int16_t z;
-};
-
 /* mlx90382 config structure */
 struct mlx90382_config
 {

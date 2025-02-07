@@ -57,11 +57,8 @@ rt_err_t mlx90382_get_info(rt_sensor_t sensor)
     d_ver = (a_ver>>8) + (d_ver_h<<16);
 
     rt_kprintf("aversion:%x\n", a_ver&0xFF);
-//    rt_thread_delay(10);
     rt_kprintf("dversion:%x\n", d_ver);
-//    rt_thread_delay(10);
     rt_kprintf("zeroposition:%x\n", zero_position);
-//    rt_thread_delay(10);
     rt_kprintf("config:%x\n", config.word_val);
 
     return result;
