@@ -23,6 +23,59 @@
 
 #define MLX90382_SPI_MAX_SPEED (10000 * 1000)
 
+static rt_err_t mlx90382_register_write(struct mlx90382_device *dev, rt_uint8_t reg, rt_uint16_t data)
+{
+    rt_int8_t res = 0;
+
+#if 1
+    rt_uint8_t tmp[2];
+    rt_uint8_t dat[2];
+#else
+    rt_uint8_t cmd_rr = 0x78;
+    rt_uint8_t buf[3];
+    rt_uint8_t rev[3];
+
+    buf[0] = reg;
+    buf[1] = (data&0xFF00)>>8;
+    buf[2] = (data&0xFF);
+#endif
+
+    if (dev->bus->type == RT_Device_Class_SPIDevice)
+    {
+#if 1
+        tmp[0] = 0x78;
+        tmp[1] = reg;
+
+        dat[0] = (data&0xFF00)>>8;
+        dat[1] = (data&0xFF);
+
+        res = rt_spi_send_then_send((struct rt_spi_device *)dev->bus, tmp, 2, dat, 2);
+#else
+        struct rt_spi_message msg1, msg2;
+
+        msg1.send_buf   = &cmd_rr;
+        msg1.recv_buf   = RT_NULL;
+        msg1.length     = 1;
+        msg1.cs_take    = 1;
+        msg1.cs_release = 0;
+        msg1.next       = &msg2;
+
+        msg2.send_buf   = buf;
+        msg2.recv_buf   = rev;
+        msg2.length     = 3;
+        msg2.cs_take    = 0;
+        msg2.cs_release = 1;
+        msg2.next       = RT_NULL;
+
+        rt_spi_transfer_message((struct rt_spi_device *)dev->bus, &msg1);
+
+        rt_kprintf("reg = 0x%x, 0x%x 0x%x\r\n", reg, rev[0], rev[1]);
+#endif
+    }
+
+    return res;
+}
+
 static rt_err_t mlx90382_register_read(struct mlx90382_device *dev, rt_uint8_t reg, rt_uint8_t len, rt_uint8_t *buf)
 {
     rt_int8_t res = 0;
@@ -101,59 +154,6 @@ static rt_err_t mlx90382_frame_read(struct mlx90382_device *dev, rt_uint8_t reg,
         msg2.next       = RT_NULL;
 
         rt_spi_transfer_message((struct rt_spi_device *)dev->bus, &msg1);
-#endif
-    }
-
-    return res;
-}
-
-static rt_err_t mlx90382_register_write(struct mlx90382_device *dev, rt_uint8_t reg, rt_uint16_t data)
-{
-    rt_int8_t res = 0;
-
-#if 1
-    rt_uint8_t tmp[2];
-    rt_uint8_t dat[2];
-#else
-    rt_uint8_t cmd_rr = 0x78;
-    rt_uint8_t buf[3];
-    rt_uint8_t rev[3];
-
-    buf[0] = reg;
-    buf[1] = (data&0xFF00)>>8;
-    buf[2] = (data&0xFF);
-#endif
-
-    if (dev->bus->type == RT_Device_Class_SPIDevice)
-    {
-#if 1
-        tmp[0] = 0x78;
-        tmp[1] = reg;
-
-        dat[0] = (data&0xFF00)>>8;
-        dat[1] = (data&0xFF);
-
-        res = rt_spi_send_then_send((struct rt_spi_device *)dev->bus, tmp, 2, dat, 2);
-#else
-        struct rt_spi_message msg1, msg2;
-
-        msg1.send_buf   = &cmd_rr;
-        msg1.recv_buf   = RT_NULL;
-        msg1.length     = 1;
-        msg1.cs_take    = 1;
-        msg1.cs_release = 0;
-        msg1.next       = &msg2;
-
-        msg2.send_buf   = buf;
-        msg2.recv_buf   = rev;
-        msg2.length     = 3;
-        msg2.cs_take    = 0;
-        msg2.cs_release = 1;
-        msg2.next       = RT_NULL;
-
-        rt_spi_transfer_message((struct rt_spi_device *)dev->bus, &msg1);
-
-        rt_kprintf("reg = 0x%x, 0x%x 0x%x\r\n", reg, rev[0], rev[1]);
 #endif
     }
 
