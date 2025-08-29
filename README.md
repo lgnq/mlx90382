@@ -80,6 +80,8 @@ INIT_ENV_EXPORT(rt_hw_mlx90382_port);
 ```
 
 ```
+// in board.c
+
 /**
 * @brief SPI MSP Initialization
 * This function configures the hardware resources used in this example
