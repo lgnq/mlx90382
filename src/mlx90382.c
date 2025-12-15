@@ -43,8 +43,8 @@ static rt_err_t mlx90382_register_write(struct mlx90382_device *dev, rt_uint8_t 
     if (dev->bus->type == RT_Device_Class_SPIDevice)
     {
 #if 1
-        tmp[0] = 0x78;
-        tmp[1] = reg;
+        tmp[0] = 0x78 | (reg>>9);
+        tmp[1] = (reg>>1) & 0xFF;
 
         dat[0] = (data&0xFF00)>>8;
         dat[1] = (data&0xFF);
@@ -83,8 +83,8 @@ static rt_err_t mlx90382_register_read(struct mlx90382_device *dev, rt_uint8_t r
 #if 0
     rt_uint8_t tmp[2];
 #else
-    rt_uint8_t cmd_rr = 0xCC;
-    rt_uint8_t addr   = reg;
+    rt_uint8_t cmd_rr = 0xCC | (reg>>9);
+    rt_uint8_t addr   = (reg>>1) & 0xFF;
 #endif
 
     if (dev->bus->type == RT_Device_Class_SPIDevice)
@@ -125,8 +125,8 @@ static rt_err_t mlx90382_frame_read(struct mlx90382_device *dev, rt_uint8_t reg,
 #if 0
     rt_uint8_t tmp[2];
 #else
-    rt_uint8_t cmd_rr = 0x03;
-    rt_uint8_t addr   = reg;
+    rt_uint8_t cmd_rr = 0x03 | (reg>>9);
+    rt_uint8_t addr   = (reg>>1) & 0xFF;
 #endif
 
     if (dev->bus->type == RT_Device_Class_SPIDevice)
