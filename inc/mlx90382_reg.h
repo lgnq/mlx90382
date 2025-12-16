@@ -11,7 +11,7 @@
 #ifndef MLX90382_REG_H_
 #define MLX90382_REG_H_
 
-#define MLX90382AA
+#define MLX90382AB
 
 #if defined MLX90382AA
 #define MLX90382_DSP_BASE_ADDR              0x000

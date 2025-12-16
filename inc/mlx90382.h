@@ -13,7 +13,9 @@
 
 #include <rtthread.h>
 #include <stdint.h>
+#include "mlx90382_reg.h"
 
+#if defined MLX90382AA
 union mlx90382_config_reg
 {
     rt_uint16_t word_val;
@@ -27,6 +29,35 @@ union mlx90382_config_reg
         rt_uint8_t abi_cfg          : 5;
     };
 };
+#elif defined MLX90382AB
+union mlx90382_config_reg
+{
+    rt_uint16_t word_val;
+
+    struct
+    {
+        rt_uint8_t sensing_mode     : 3;    //BIT0-BIT2
+        rt_uint8_t gpio_if          : 2;
+        rt_uint8_t abi_if           : 1;
+        rt_uint8_t gpio_cfg         : 5;
+        rt_uint8_t abi_cfg          : 5;
+    };
+};
+#elif defined MLX90382BA
+union mlx90382_config_reg
+{
+    rt_uint16_t word_val;
+
+    struct
+    {
+        rt_uint8_t sensing_mode     : 3;    //BIT0-BIT2
+        rt_uint8_t gpio_if          : 2;
+        rt_uint8_t abi_if           : 1;
+        rt_uint8_t gpio_cfg         : 5;
+        rt_uint8_t abi_cfg          : 5;
+    };
+};
+#endif
 
 /* mlx90382 config structure */
 struct mlx90382_config
