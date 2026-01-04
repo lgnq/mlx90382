@@ -75,6 +75,14 @@ struct mlx90382_device
     struct mlx90382_config config;
 };
 
+enum MLX90382_CMD
+{
+    CMD_RR  = 0xCC,
+    CMD_RW  = 0x78,
+    CMD_FR  = 0x34,
+    CMD_SFR = 0xD0, 
+};
+
 /**
  * This function initialize the mpu6xxx device.
  *
