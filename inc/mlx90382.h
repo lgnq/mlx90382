@@ -118,7 +118,7 @@ rt_err_t mlx90382_get_zero_position(struct mlx90382_device *dev, rt_uint16_t *po
  * @return the reading status, RT_EOK represents  reading the data successfully.
  */
 rt_err_t mlx90382_get_temp(struct mlx90382_device *dev, float *temp);
-rt_err_t mlx90382_get_speed(struct mlx90382_device *dev, rt_int16_t *speed);
+rt_err_t mlx90382_get_speed(struct mlx90382_device *dev, float *speed);
 
 rt_err_t mlx90382_get_analog_version(struct mlx90382_device *dev, rt_uint16_t *version);
 rt_err_t mlx90382_get_digital_version(struct mlx90382_device *dev, rt_uint16_t *version);

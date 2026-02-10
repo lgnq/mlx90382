@@ -23,7 +23,7 @@
 
 #define MLX90382_SPI_MAX_SPEED (10000 * 1000)
 
-static rt_err_t mlx90382_register_write(struct mlx90382_device *dev, rt_uint8_t reg, rt_uint16_t data)
+static rt_err_t mlx90382_register_write(struct mlx90382_device *dev, rt_uint16_t reg, rt_uint16_t data)
 {
     rt_int8_t res = 0;
 
@@ -44,7 +44,7 @@ static rt_err_t mlx90382_register_write(struct mlx90382_device *dev, rt_uint8_t 
     return res;
 }
 
-static rt_err_t mlx90382_register_read(struct mlx90382_device *dev, rt_uint8_t reg, rt_uint8_t len, rt_uint8_t *buf)
+static rt_err_t mlx90382_register_read(struct mlx90382_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
 {
     rt_int8_t res = 0;
 
@@ -75,7 +75,7 @@ static rt_err_t mlx90382_register_read(struct mlx90382_device *dev, rt_uint8_t r
     return res;
 }
 
-static rt_err_t mlx90382_frame_read(struct mlx90382_device *dev, rt_uint8_t reg, rt_uint8_t len, rt_uint8_t *buf)
+static rt_err_t mlx90382_frame_read(struct mlx90382_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
 {
     rt_int8_t res = 0;
 
@@ -299,7 +299,7 @@ rt_err_t mlx90382_get_temp(struct mlx90382_device *dev, float *temp)
     return RT_EOK;
 }
 
-rt_err_t mlx90382_get_speed(struct mlx90382_device *dev, rt_int16_t *speed)
+rt_err_t mlx90382_get_speed(struct mlx90382_device *dev, float *speed)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
