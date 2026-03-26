@@ -95,7 +95,7 @@ static rt_err_t mlx90382_control(struct rt_sensor_device *sensor, int cmd, void 
         result = mlx90382_get_sc_phase(mlx_dev, (float *)args);
         break;
     case RT_SENSOR_CTRL_USER_CMD_SPEED:
-        result = mlx90382_get_speed(mlx_dev, (rt_int16_t *)args);
+        result = mlx90382_get_speed(mlx_dev, (float *)args);
         break;
     case RT_SENSOR_CTRL_USER_CMD_TEMP:
         result = mlx90382_get_temp(mlx_dev, (float *)args);
@@ -187,7 +187,7 @@ static void read_mps_entry(void *parameter)
     float lin_phase;
     float driftc_phase;
     float sc_phase;
-    rt_int16_t speed;
+    float speed;
     float temp;
 
     dev = rt_device_find(parameter);
